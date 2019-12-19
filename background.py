@@ -62,7 +62,7 @@ class Background:
         out = out.split("\n")
         print(out)'''
 
-        cmd = 'cd '+ str(up) +' && zip -0 -r '+ pfp +' '+ os.path.basename(fp)
+        cmd = 'cd "'+ str(up) +'" && zip -0 -r "'+ pfp +'" "'+ os.path.basename(fp) +'"'
         #print(type(cmd))
         print(cmd)
         #return
