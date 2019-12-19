@@ -48,14 +48,27 @@ class Background:
 
     @staticmethod
     def pkzip(fp, pfp): # file path , packed file path
-        #print(fp)
-        #print(pfp)
-        #return
+        print(fp)
+        print(pfp)
+        up = Path(fp).parent
+        print(up)
+        #print(type(up))
         #out = subprocess.run(['zip', '-0', '-j', '-q', '-r', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
-        out = subprocess.run(['zip', '-0', '-j', '-r', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+        
+        '''out = subprocess.run(['zip', '-0', '-r', pfp, fp +'/*'], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
         out = out.stdout.decode("utf-8") 
         #out = out.split(display_name)
         #out = out.split("\n")
         out = out.split("\n")
-        print(out)
+        print(out)'''
+
+        cmd = 'cd '+ str(up) +' && zip -0 -r '+ pfp +' '+ os.path.basename(fp)
+        #print(type(cmd))
+        print(cmd)
+        #return
+        pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+        fbuf = pipe.stdout
+        for line in fbuf.readlines():
+            lines = line.decode().split("\n") #            
+            print(lines)
         return
