@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #/usr/bin/env python
 
+import os.path # is file
 import sys
 import time
 from background import Background
@@ -19,6 +20,8 @@ class DragDropWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Fast Archiver")
         self.set_position(Gtk.WindowPosition.CENTER)
+        icon_fp = os.path.dirname(os.path.realpath(__file__)) + '/res/farch32.png'
+        self.set_icon_from_file(icon_fp)        
         #self.set_size_request(300, 250)
 
         #label = Gtk.Label('')
@@ -63,9 +66,28 @@ class DropArea(Gtk.Label):
         self.set_size_request(150, 100)
 
     def drag_data_received(self, widget, drag_context, x,y, data,info, time):
+        # print(widget)
+        #print(widget.get_name())
         if info == TARGET_ENTRY_TEXT:
-            text = data.get_text()
-            print("Received text: %s" % text)
+            fp = data.get_text()
+            fp = fp.replace('file://', '')            
+
+            if widget.get_label() == 'ZIP':
+                pfp = fp +'.zip'
+                '''if os.path.isfile(fp):
+                    pfp = fp +'.zip'
+                else:
+                    pfp = fp'''
+                Background.pkzip(fp, pfp)
+
+            if widget.get_label() == 'TAR':
+                pfp = fp +'.tar'
+                '''if os.path.isfile(fp):
+                    pfp = fp +'.zip'
+                else:
+                    pfp = fp'''
+                Background.pktar(fp, pfp)
+                #print("Received text: %s" % text)
 
         elif info == TARGET_ENTRY_PIXBUF:
             pixbuf = data.get_pixbuf()
@@ -96,6 +118,7 @@ class DropArea(Gtk.Label):
 
 def main():
     win = DragDropWindow()
+    win.set_keep_above(True)
     win.connect("destroy", Gtk.main_quit)
     win.show_all()
     Gtk.main()

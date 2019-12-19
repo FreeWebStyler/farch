@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Exec=farch
+Icon=/home/alex/.icons/farch32.png
+Name=Fast Archiver
+Categories=System;Filesystem;GTK;Utility;
+StartupNotify=true
+Terminal=false
+TerminalOptions=
+Type=Application
+X-DBUS-ServiceName=
+X-DBUS-StartupType=
+X-KDE-SubstituteUID=false
+X-KDE-Username=
