@@ -32,16 +32,32 @@ class Background:
             #out = subprocess.run(['tar', '-c', '-v', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
             out = subprocess.run(['tar', '-C', up, '-c', '-f', pfp, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
             #cmd = "cd "+ fp +' && tar -cf '+ pfp +' .'
-            
+
             '''cmd = "cd "+ fp +' && tar -cf '+ pfp +' '+ os.path.basename(fp)
             print(cmd)
             #return
             pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
             fbuf = pipe.stdout
             for line in fbuf.readlines():
-                lines = line.decode().split("\n") #            
+                lines = line.decode().split("\n") #
                 print(lines)'''
-        out = out.stdout.decode("utf-8") 
+        out = out.stdout.decode("utf-8")
+        out = out.split("\n")
+        print(out)
+        return
+
+    def pktgz(fp, pfp):
+        print(fp)
+        print(pfp)
+        print(os.path.basename(fp))
+        up = Path(fp).parent
+        print(up)
+        if os.path.isfile(fp):
+            dir = os.path.dirname(fp)
+            out = subprocess.run(['tar', '-c', '-z', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+        else:
+            out = subprocess.run(['tar', '-C', up, '-c', '-z', '-f', pfp, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+        out = out.stdout.decode("utf-8")
         out = out.split("\n")
         print(out)
         return
@@ -54,9 +70,9 @@ class Background:
         print(up)
         #print(type(up))
         #out = subprocess.run(['zip', '-0', '-j', '-q', '-r', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
-        
+
         '''out = subprocess.run(['zip', '-0', '-r', pfp, fp +'/*'], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
-        out = out.stdout.decode("utf-8") 
+        out = out.stdout.decode("utf-8")
         #out = out.split(display_name)
         #out = out.split("\n")
         out = out.split("\n")
@@ -69,6 +85,6 @@ class Background:
         pipe = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
         fbuf = pipe.stdout
         for line in fbuf.readlines():
-            lines = line.decode().split("\n") #            
+            lines = line.decode().split("\n") #
             print(lines)
         return

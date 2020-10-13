@@ -21,7 +21,7 @@ class DragDropWindow(Gtk.Window):
         Gtk.Window.__init__(self, title="Fast Archiver")
         self.set_position(Gtk.WindowPosition.CENTER)
         icon_fp = os.path.dirname(os.path.realpath(__file__)) + '/res/farch32.png'
-        self.set_icon_from_file(icon_fp)        
+        self.set_icon_from_file(icon_fp)
         #self.set_size_request(300, 250)
 
         #label = Gtk.Label('')
@@ -30,11 +30,13 @@ class DragDropWindow(Gtk.Window):
 
         hbox = Gtk.Box(spacing=10)
         #vbox.pack_start(hbox, True, True, 0)
-        self.drop_areaTar = DropArea('TAR')        
+        self.drop_areaTar = DropArea('TAR')
+        self.drop_areaTgz = DropArea('TGZ')
         self.drop_areaZip = DropArea('ZIP')
         hbox.pack_start(self.drop_areaTar, True, True, 0)        #self.add_text_targets()
+        hbox.pack_start(self.drop_areaTgz, True, True, 0)        #self.add_text_targets()
         hbox.pack_start(self.drop_areaZip, True, True, 0)        #self.add_text_targets()
-        
+
         #llabel = Gtk.Label('')
         #vvbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=100)
         #vbox.pack_end(llabel, True, True, 0)
@@ -51,6 +53,7 @@ class DragDropWindow(Gtk.Window):
 
     def add_text_targets(self, button=None):        #self.drop_areaTar.drag_dest_set_target_list(None)
         self.drop_areaTar.drag_dest_add_text_targets()
+        self.drop_areaTgz.drag_dest_add_text_targets()
         self.drop_areaZip.drag_dest_add_text_targets()
 
 class DropArea(Gtk.Label):
@@ -70,7 +73,7 @@ class DropArea(Gtk.Label):
         #print(widget.get_name())
         if info == TARGET_ENTRY_TEXT:
             fp = data.get_text()
-            fp = fp.replace('file://', '')            
+            fp = fp.replace('file://', '')
 
             if widget.get_label() == 'ZIP':
                 pfp = fp +'.zip'
@@ -87,7 +90,10 @@ class DropArea(Gtk.Label):
                 else:
                     pfp = fp'''
                 Background.pktar(fp, pfp)
-                #print("Received text: %s" % text)
+
+            if widget.get_label() == 'TGZ':
+                pfp = fp +'.tgz'
+                Background.pktgz(fp, pfp)
 
         elif info == TARGET_ENTRY_PIXBUF:
             pixbuf = data.get_pixbuf()
