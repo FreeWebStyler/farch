@@ -10,7 +10,7 @@ iu=$1
 bin_name=farch
 exec_name=farch.py
 
-install_to=/home/$iu/0data/progs
+install_to=/home/$iu/progs
 
 base_dirp="$(cd "$(dirname "$0")"; pwd)";
 
@@ -24,6 +24,7 @@ base_dir_name=${ADDR[-1]}
 #echo $install_to/$base_dir_name
 cp -r $base_dirp $install_to/$base_dir_name
 chown $iu:$iu -R $install_to/$base_dir_name
+rm /usr/bin/$bin_name
 ln -s $install_to/$base_dir_name/$exec_name /usr/bin/$bin_name
 
 desktop_copy_to=/home/$iu/Desktop/$bin_name.desktop

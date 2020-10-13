@@ -10,7 +10,7 @@ iu=$1
 bin_name=farch
 exec_name=farch.py
 
-install_to=/home/$iu/0data/progs
+install_to=/home/$iu/progs
 
 base_dirp="$(cd "$(dirname "$0")"; pwd)";
 
