@@ -20,12 +20,18 @@ class Background:
         print(up)
         if os.path.isfile(fp):
             dir = os.path.dirname(fp)
-            #print(dir)
-            #return
+            print(dir)
+            #wd = os.getcwd()
+            #os.chdir(dir)
+            #print(os.getcwd())
             #out = subprocess.run(['tar', '-c', '-v', '-f', pfp, '--add-file', fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
             #out = subprocess.run(['tar', '-c', '-v', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
             #out = subprocess.run(['tar', '-c', '-v', '-f', pfp, '-C', dir, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
-            out = subprocess.run(['tar', '-c', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+            #out = subprocess.run(['tar', '-c', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None) #cwd=dir,
+            #out = subprocess.run(['tar', '-c', '-f', pfp, '-C', dir, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None) #cwd=dir,
+            out = subprocess.run(['tar', '-c', '-f', pfp, '-C', dir, '.'], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None) #cwd=dir,
+            out = subprocess.run(['tar', '-c', '-f', pfp, '-C', dir, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None) #cwd=dir,
+            #out = subprocess.run(['tar', '-c', '-f', pfp, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None) #cwd=dir,
         else:
             #out = subprocess.run(['tar', '-c', '-v', '-f', pfp, '-C', fp, '.'], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
             #out = subprocess.run(['tar', '-c', '-v', '-f', '--strip-components=2', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
@@ -54,7 +60,9 @@ class Background:
         print(up)
         if os.path.isfile(fp):
             dir = os.path.dirname(fp)
-            out = subprocess.run(['tar', '-c', '-z', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+            #out = subprocess.run(['tar', '-c', '-z', '-f', pfp, fp], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+            #out = subprocess.run(['tar', '-c', '-z', '-f', pfp, '-C', dir, '.'], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
+            out = subprocess.run(['tar', '-c', '-z', '-f', pfp, '-C', dir, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
         else:
             out = subprocess.run(['tar', '-C', up, '-c', '-z', '-f', pfp, os.path.basename(fp)], stdout=subprocess.PIPE,  stdin=None, shell=False, input=None)
         out = out.stdout.decode("utf-8")
