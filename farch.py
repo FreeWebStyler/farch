@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 #/usr/bin/env python
 
+import chardet
+import codecs
 import os.path # is file
 import sys
 import time
@@ -68,11 +70,15 @@ class DropArea(Gtk.Label):
         self.connect('drag-data-received', self.drag_data_received)
         self.set_size_request(150, 100)
 
-    def drag_data_received(self, widget, drag_context, x,y, data,info, time):
+    def drag_data_received(self, widget, drag_context, x,y, data, info, time):
         # print(widget)
         #print(widget.get_name())
         if info == TARGET_ENTRY_TEXT:
-            fp = data.get_text()
+            #print(data.get_data())
+            #fp = data.get_text()
+            fpb = data.get_data()
+            encoding = chardet.detect(fpb)["encoding"] #print(encoding)
+            fp = codecs.decode(bytes(fpb), encoding) #print(fp) sys.exit()
             fp = fp.replace('file://', '')
 
             if widget.get_label() == 'ZIP':

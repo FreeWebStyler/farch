@@ -4,6 +4,7 @@ import base64
 import os
 import re
 import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -13,11 +14,9 @@ class Background:
 
     @staticmethod
     def pktar(fp, pfp):
-        print(fp)
-        print(pfp)
-        print(os.path.basename(fp))
-        up = Path(fp).parent
-        print(up)
+        #print(fp)        sys.exit()
+        #print(pfp)        print(os.path.basename(fp))
+        up = Path(fp).parent #print(up)        sys.exit()
         if os.path.isfile(fp):
             dir = os.path.dirname(fp)
             print(dir)
