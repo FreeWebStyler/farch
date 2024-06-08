@@ -1,3 +1,5 @@
+# Fast Archiver - app that accelerate archiving w/ it's GUI
+
 # Install Fast Archiver:
 
 sudo install.sh

@@ -24,7 +24,7 @@ base_dir_name=${ADDR[-1]}
 #echo $install_to/$base_dir_name
 cp -r $base_dirp $install_to/$base_dir_name
 chown $iu:$iu -R $install_to/$base_dir_name
-rm /usr/bin/$bin_name
+rm /usr/bin/$bin_name &>/dev/null
 ln -s $install_to/$base_dir_name/$exec_name /usr/bin/$bin_name
 
 desktop_copy_to=/home/$iu/Desktop/$bin_name.desktop
